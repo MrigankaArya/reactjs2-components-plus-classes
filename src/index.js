@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM  from 'react-dom';
 import SeasonDisplay from './SeasonDisplay';
-
+import Spinner from './Spinner';
 class App extends React.Component {
 
 	state = {lat: null, errorMessage: ''};								  //only direct assignment to the state object
@@ -13,13 +13,10 @@ class App extends React.Component {
 		);
 	}
 
-	componentDidUpdate(){
-		console.log("Component was re-rendered due to update");
-	}
+	// componentDidUpdate(){
+	// }
 	
-	//React specific function
-	render(){
-
+	renderContent(){
 		if(!this.state.lat && this.state.errorMessage){
 			//show error
 			return(<div> Error: {this.state.errorMessage} </div>);
@@ -28,9 +25,15 @@ class App extends React.Component {
 			if (this.state.lat)
 				return(<SeasonDisplay lat = {this.state.lat}/>);
 			else 
-				return(<div> Loading... </div>);
+				return(<Spinner message="Please accept the location request."/>);
 		}
-		
+	}
+
+	//React specific function
+	render(){
+		return(<div className="border red">
+				{this.renderContent()}
+			</div>);
 	};
 };
 
